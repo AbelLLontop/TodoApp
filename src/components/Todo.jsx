@@ -3,13 +3,12 @@ import { Form } from "react-router-dom";
 import { TodoSetContext } from "../store/store";
 import { iconStatus } from "./utils/iconStatus";
 
-
-const  Todo = ({ id, name, description, active, status }) => {
+const Todo = ({ id, name, description, active, status }) => {
   const dispatch = useContext(TodoSetContext);
-  
+
   const deleteTodo = () => {
     dispatch({ type: "DELETE_TODO", payload: id });
-  }
+  };
 
   const updateTodo = (active) => {
     dispatch({
@@ -19,15 +18,32 @@ const  Todo = ({ id, name, description, active, status }) => {
   };
 
   return (
-    <tr draggable className="active-todo">
+    <tr
+      draggable
+      onDragStart={(e) => {
+        console.log(`${id} onDragStart`);
+      }}
+      onDragEnd={(e) => {
+        console.log(`${id} onDragEnd`);
+      }}
+      className="active-todo todo-container"
+    >
       <th>
         <span>
           <i className="bi bi-grip-vertical"></i>
           {/* {id} */}
         </span>
       </th>
-      <td className={`${active ? `text-decoration-line-through` : ""} table-name`}>{name}</td>
-      <td className={`${active ? `text-decoration-line-through` : ""} table-description`}>
+      <td
+        className={`${active ? `text-decoration-line-through` : ""} table-name`}
+      >
+        {name}
+      </td>
+      <td
+        className={`${
+          active ? `text-decoration-line-through` : ""
+        } table-description`}
+      >
         {description}
       </td>
       <td>
@@ -46,10 +62,9 @@ const  Todo = ({ id, name, description, active, status }) => {
           </button>
         </Form>
 
-          <button onClick={deleteTodo} className="border-0 bg-white">
-            <i className="bi bi-trash-fill"></i>
-          </button>
-
+        <button onClick={deleteTodo} className="border-0 bg-white">
+          <i className="bi bi-trash-fill"></i>
+        </button>
 
         {!active ? (
           <i

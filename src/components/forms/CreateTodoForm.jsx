@@ -108,7 +108,12 @@ const CreateTodoForm = () => {
           ))}
         </select>
       </div>
-      <button className="btn btn-primary w-100">Create</button>
+            <div className="d-flex row flex-column align-items-center gap-3">
+      <button className="btn btn-primary w-50">Create</button>
+      <button type="button" onClick={()=>navigate('/',{replace:true})} className="btn btn-danger w-50">Cancel</button>
+
+
+            </div>
     </Form>
   )
 }

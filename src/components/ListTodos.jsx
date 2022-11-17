@@ -13,20 +13,20 @@ const ListTodo = () => {
     currentPage: 1,
   });
 
-
-  useEffect(()=>{
+  useEffect(() => {
     setPagination({
       ...pagination,
       numberPages: Math.ceil(todos.length / 5),
-    })
-  },[todos])
+    });
+  }, [todos]);
 
   useEffect(() => {
     setFilterTodos(todos.slice(pagination.start, pagination.end));
   }, [pagination]);
 
   return (
-    <div className="col-lg-5 shadow">
+    <div className="col-lg-5 shadow containter-list  d-flex flex-column justify-content-between">
+      <div>
       <div className="d-flex justify-content-between pt-4">
         <div></div>
         <Link to={"/todo/create"}>
@@ -35,7 +35,15 @@ const ListTodo = () => {
           </button>
         </Link>
       </div>
-      <div className="table-container">
+      <div className="table-container"
+        onDrop={(e) => {
+          // e.preventDefault();
+          console.log("onDrop");
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+      >
         <table className="table mt-4">
           <thead>
             <tr>
@@ -48,14 +56,19 @@ const ListTodo = () => {
           </thead>
           <tbody>
             {filterTodos?.map((todo, index) => (
-              <Todo  key={todo.id} {...todo} />
+              <Todo
+              key={todo.id}
+              {...todo}
+             
+              />
             ))}
           </tbody>
         </table>
-        {filterTodos.length==0&&(<h4 className="text-center w-100 text-muted">Empty todos</h4>)}
-
+        {filterTodos.length == 0 && (
+          <h4 className="text-center w-100 text-muted">Empty todos</h4>
+        )}
       </div>
-
+      </div>
       <nav className="navigation d-flex justify-content-center">
         <ul className="pagination">
           {Array(pagination.numberPages)

@@ -118,7 +118,11 @@ const EditTodoForm = () => {
           ))}
         </select>
       </div>
-      <button className="btn btn-primary w-100">Update</button>
+      <div className="d-flex justify-content-between row gap-4">
+      <button type="button" onClick={()=>navigate('/',{replace:true})} className="btn btn-danger col">Cancel</button>
+      <button className="btn btn-primary col">Update</button>
+
+      </div>
     </Form>
   )
 }

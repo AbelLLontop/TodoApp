@@ -6,9 +6,13 @@
     box-shadow: none;
   }
 
-  .table-container{
+   .table-container{
     overflow-x: auto;
+    overflow-y: hidden;
   }
+ .containter-list{
+  height: 25.75rem;
+ }
 
   .pointer{
     cursor: pointer;
@@ -30,4 +34,19 @@
   }
   .table-description{
     max-width: 8rem;
+  }
+
+  .todo-container{
+    animation:fadeIn .3s ease-in-out;
+  }
+
+  @keyframes fadeIn{
+    0%{
+      opacity: 0;
+      transform:translateY(20px);
+    }
+    100%{
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
