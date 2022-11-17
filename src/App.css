@@ -1,0 +1,33 @@
+.form-control:focus,.form-select:focus {
+    border: 1px solid #ced4da;
+  }
+
+  .page-link:focus{
+    box-shadow: none;
+  }
+
+  .table-container{
+    overflow-x: auto;
+  }
+
+  .pointer{
+    cursor: pointer;
+  }
+
+  td,th{
+    white-space: nowrap;
+  }
+
+  .table-description,.table-name{
+
+    text-overflow: ellipsis;
+    word-wrap: 1;
+    overflow: hidden;
+  }
+  .table-name{
+    max-width: 10rem;
+
+  }
+  .table-description{
+    max-width: 8rem;
+  }
