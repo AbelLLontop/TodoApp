@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
 import { Form } from "react-router-dom";
-import { TodoSetContext } from "../App";
+import { TodoSetContext } from "../store/store";
 import { iconStatus } from "./utils/iconStatus";
 
-const Todo = ({ id, name, description, active, status, position }) => {
+
+const  Todo = ({ id, name, description, active, status }) => {
   const dispatch = useContext(TodoSetContext);
+  
+  const deleteTodo = () => {
+    dispatch({ type: "DELETE_TODO", payload: id });
+  }
 
   const updateTodo = (active) => {
     dispatch({
@@ -14,11 +19,11 @@ const Todo = ({ id, name, description, active, status, position }) => {
   };
 
   return (
-    <tr className="active-todo">
+    <tr draggable className="active-todo">
       <th>
         <span>
           <i className="bi bi-grip-vertical"></i>
-          {position + 1}
+          {/* {id} */}
         </span>
       </th>
       <td className={`${active ? `text-decoration-line-through` : ""} table-name`}>{name}</td>
@@ -40,12 +45,11 @@ const Todo = ({ id, name, description, active, status, position }) => {
             <i className="bi bi-pen-fill"></i>
           </button>
         </Form>
-        <Form action={`todo/${id}/edit`}>
-          <button type="submit" className="border-0 bg-white">
-            {" "}
+
+          <button onClick={deleteTodo} className="border-0 bg-white">
             <i className="bi bi-trash-fill"></i>
           </button>
-        </Form>
+
 
         {!active ? (
           <i

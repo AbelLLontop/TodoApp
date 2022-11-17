@@ -13,6 +13,7 @@ export const router = createBrowserRouter([
     children: [
       { index:true,element: <ListTodo /> },
       { path: "todo/:todoId/edit",loader:todoEditLoader, action:todoEditAction,element: <EditTodoForm /> },
+      { path: "todo/:todoId/destroy", action:todoEditAction,element: <EditTodoForm /> },
       { path: "todo/create",action:todoCreateAction, element: <CreateTodoForm /> },
     ],
   },

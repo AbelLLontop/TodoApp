@@ -1,66 +1,7 @@
 import { createContext, useEffect, useReducer, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import "./App.css";
-
-export const ENUM_STATUS = {
-  SUCCESS: "primary",
-  WARNING: "warning",
-  DANGER: "danger",
-};
-
-const initialTodos = [
-  {
-    id: 1,
-    name: "Todo 1",
-    description: "Description 1",
-    active: true,
-    status: ENUM_STATUS.SUCCESS,
-  },
-  {
-    id: 2,
-    name: "Todo 2",
-    description: "Description 2",
-    active: true,
-    status: ENUM_STATUS.WARNING,
-  },
-  {
-    id: 3,
-    name: "Todo 3",
-    description: "Description 3",
-    active: true,
-    status: ENUM_STATUS.DANGER,
-  },
-  {
-    id: 4,
-    name: "Todo 4",
-    description: "Description 4",
-    active: true,
-    status: ENUM_STATUS.SUCCESS,
-  },
-];
-
-export const TodoContext = createContext();
-export const TodoSetContext = createContext();
-
-const reducer = (state,action)=>{
-  switch(action.type){
-    case 'ADD_TODO':
-      return [...state,action.payload];
-    case 'DELETE_TODO':
-      return state.filter(todo=>todo.id!==action.payload);
-    case 'UPDATE_TODO':
-      return state.map(todo=>todo.id==action.payload.id?action.payload:todo);
-    case 'RESET_TODOS':
-      return initialTodos;
-    default:
-      return state;
-  }
-}
-
-const initializer = (initialTodos)=>{
-  const todosStorage = JSON.parse(localStorage.getItem('todos'));
-  return todosStorage ? todosStorage : initialTodos;
-}
+import { initializer, initialTodos, reducer ,TodoContext,TodoSetContext} from "./store/store";
 
 
 function App() {
