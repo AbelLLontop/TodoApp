@@ -1,20 +1,17 @@
-import React, { useContext } from "react";
+import { useDispatch } from "react-redux";
 import { Form } from "react-router-dom";
-import { TodoSetContext } from "../store/store";
+import { deleteTodo, updateTodo } from "../features/todo/todoSlice";
 import { iconStatus } from "./utils/iconStatus";
 
 const Todo = ({ id, name, description, active, status }) => {
-  const dispatch = useContext(TodoSetContext);
+  const dispatch = useDispatch();
 
-  const deleteTodo = () => {
-    dispatch({ type: "DELETE_TODO", payload: id });
+  const handleDelete = () => {
+    dispatch(deleteTodo({ id }));
   };
 
-  const updateTodo = (active) => {
-    dispatch({
-      type: "UPDATE_TODO",
-      payload: { id, name, description, active, status },
-    });
+  const handleUpdate = (active) => {
+    dispatch(updateTodo( { id, name, description, active, status }))
   };
 
   return (
@@ -55,28 +52,31 @@ const Todo = ({ id, name, description, active, status }) => {
           {!active ? status : iconStatus(status)}
         </span>
       </td>
-      <td className="d-flex gap-1">
+      <td className="d-flex gap-1 align-items-center">
         <Form action={`todo/${id}/edit`}>
-          <button type="submit" className="border-0 bg-white">
-            <i className="bi bi-pen-fill"></i>
+          <button type="submit" className="option-icon border-0">
+            <i className=" bi bi-pen-fill"></i>
           </button>
         </Form>
 
-        <button onClick={deleteTodo} className="border-0 bg-white">
-          <i className="bi bi-trash-fill"></i>
+        <button onClick={handleDelete} className="option-icon border-0">
+          <i className=" bi bi-trash-fill"></i>
         </button>
+          <button className="option-icon border-0">
 
+         
         {!active ? (
           <i
-            className="pointer bi bi-toggle-off"
-            onClick={() => updateTodo(true)}
+            className=" pointer bi bi-toggle-off"
+            onClick={() => handleUpdate(true)}
           ></i>
         ) : (
           <i
             className="pointer bi bi-toggle-on"
-            onClick={() => updateTodo(false)}
+            onClick={() => handleUpdate(false)}
           ></i>
         )}
+         </button>
       </td>
     </tr>
   );

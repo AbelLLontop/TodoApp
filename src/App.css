@@ -11,7 +11,7 @@
     overflow-y: hidden;
   }
  .containter-list{
-  height: 25.75rem;
+  height: 28.75rem;
  }
 
   .pointer{
@@ -48,5 +48,29 @@
     100%{
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+  .option-icon{
+    background-color: rgba(255, 0, 0, 0);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .option-icon:hover,  .option-icon:focus{
+    background-color: #e9f2ff;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0%{
+      box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.4);
+    }
+    70%{
+      box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+    100%{
+      box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
     }
   }

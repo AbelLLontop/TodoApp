@@ -1,6 +1,8 @@
-import React, {useContext, useEffect, useState } from "react";
-import { Form, redirect, useActionData, useNavigate} from "react-router-dom";
-import { ENUM_STATUS, TodoSetContext } from "../../store/store";
+import React, {useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Form, useActionData, useNavigate} from "react-router-dom";
+import { addTodo } from "../../features/todo/todoSlice";
+import { ENUM_STATUS } from "../../store/status";
 import { iconStatus } from "../utils/iconStatus";
 
 const initialTodo =  {
@@ -22,11 +24,11 @@ const CreateTodoForm = () => {
     const [todo,setTodo] = useState(initialTodo)
     const {name,description,active,status} = todo;
     const newTodo = useActionData();
-    const dispatch = useContext(TodoSetContext);
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     useEffect(()=>{
       if(newTodo){
-        dispatch({type:'ADD_TODO',payload:newTodo});
+        dispatch(addTodo(newTodo));
         navigate('/',{replace:true});
       }
     },[newTodo])

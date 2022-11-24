@@ -1,14 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Form, Link, redirect, useActionData, useLoaderData, useNavigate } from "react-router-dom";
-import { ENUM_STATUS, TodoSetContext } from "../../store/store";
+import { updateTodo } from "../../features/todo/todoSlice";
+import { ENUM_STATUS } from "../../store/status";
 import { iconStatus } from "../utils/iconStatus";
 
 export const loader = async ({ request, params }) => {
   const { todoId } = params;
   const todos = JSON.parse(localStorage.getItem("todos")) || [];
+  
   if (todoId && todos.length > 0) {
     const todo = todos.find((currentTodo) => currentTodo.id == todoId);
-    return { todo };
+    if (todo) {
+      return { todo };
+    }
+    return {};
   } else {
     return redirect("/");
   }
@@ -27,16 +33,23 @@ const EditTodoForm = () => {
   const [stateActive, setStateActive] = useState(false);
   const [stateStatus, setStateStatus] = useState(ENUM_STATUS.SUCCESS);
   const { todo } = useLoaderData();
-  const { name, description, active, status } = todo;
+  const { name, description, active, status } = todo||{};
   const todoUpdate = useActionData();
-  const dispatch = useContext(TodoSetContext);
+  const dispatch = useDispatch();
+  
   const navigate = useNavigate();
   useEffect(()=>{
     if(todoUpdate){
-      dispatch({type:'UPDATE_TODO',payload:todoUpdate});
+      dispatch(updateTodo(todoUpdate));
       navigate('/',{replace:true});
     }
   },[todoUpdate])
+
+ 
+  useEffect(() => {
+    setStateActive(active);
+    setStateStatus(status);
+  }, []);
 
   if (!todo) {
     return (
@@ -48,11 +61,6 @@ const EditTodoForm = () => {
       </div>
     );
   }
-  useEffect(() => {
-    setStateActive(active);
-    setStateStatus(status);
-  }, []);
-
 
   return (
     <Form method="post" className="col-lg-5">   

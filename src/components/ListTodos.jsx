@@ -1,28 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { TodoContext } from "../store/store";
+import { usePagination } from "../hooks/usePagination";
+import Pagination from "./Pagination";
 import Todo from "./Todo";
 
 const ListTodo = () => {
-  const todos = useContext(TodoContext);
+  const todos = useSelector(state=>state.todos)
   const [filterTodos, setFilterTodos] = useState([]);
-  const [pagination, setPagination] = useState({
-    start: 0,
-    end: 5,
-    numberPages: Math.ceil(todos.length / 5),
-    currentPage: 1,
-  });
-
-  useEffect(() => {
-    setPagination({
-      ...pagination,
-      numberPages: Math.ceil(todos.length / 5),
-    });
-  }, [todos]);
+  const [pagination,selectPage] = usePagination(todos);
 
   useEffect(() => {
     setFilterTodos(todos.slice(pagination.start, pagination.end));
   }, [pagination]);
+
+  useEffect(()=>{
+    localStorage.setItem('todos',JSON.stringify(todos))
+  },[todos]);
 
   return (
     <div className="col-lg-5 shadow containter-list  d-flex flex-column justify-content-between">
@@ -69,34 +63,7 @@ const ListTodo = () => {
         )}
       </div>
       </div>
-      <nav className="navigation d-flex justify-content-center">
-        <ul className="pagination">
-          {Array(pagination.numberPages)
-            .fill(0)
-            .map((_, index) => (
-              <li
-                key={index}
-                className={`page-item ${
-                  pagination.currentPage === index + 1 ? "active" : ""
-                }`}
-              >
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    setPagination({
-                      ...pagination,
-                      currentPage: index + 1,
-                      start: index * 5,
-                      end: (index + 1) * 5,
-                    })
-                  }
-                >
-                  {index + 1}
-                </button>
-              </li>
-            ))}
-        </ul>
-      </nav>
+      <Pagination pagination={pagination} selectPage={selectPage}/>
     </div>
   );
 };

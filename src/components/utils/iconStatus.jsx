@@ -1,4 +1,4 @@
-import { ENUM_STATUS } from "../../store/store";
+import { ENUM_STATUS } from "../../store/status";
 
 export const iconStatus = (status) => {
     switch (status) {
